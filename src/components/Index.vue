@@ -5,7 +5,7 @@
     <div class="container">
       <ul class="row home-about">
         <li class="col-md-4">
-          <router-link to="" class="thumbnail">
+          <router-link to="/about/1" class="thumbnail">
             <h3 class="title">公司简介</h3>
             <img src="../assets/home01.png">
             <p class="caption">
@@ -15,7 +15,7 @@
           </router-link>
         </li>
         <li class="col-md-4">
-          <router-link to="" class="thumbnail">
+          <router-link to="/about/2" class="thumbnail">
             <h3 class="title">巨杉文化</h3>
             <img src="../assets/home02.png">
             <p class="caption">
@@ -25,7 +25,7 @@
           </router-link>
         </li>
         <li class="col-md-4">
-          <router-link to="" class="thumbnail">
+          <router-link to="/about/3" class="thumbnail">
             <h3 class="title">投资理念</h3>
             <img src="../assets/home03.png">
             <p class="caption">

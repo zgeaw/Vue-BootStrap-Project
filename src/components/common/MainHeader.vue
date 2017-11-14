@@ -32,23 +32,23 @@
               <li><router-link to="/about/5">招贤纳士</router-link></li>
             </ul>
           </li>
-          <li>
-            <router-link to="/new/0">巨杉视野</router-link>
+          <li :class="{active: (active == 'News')}">
+            <router-link to="/news/1">巨杉视野</router-link>
             <ul>
-              <li><router-link to="/new/1">巨杉资讯</router-link></li>
-              <li><router-link to="/new/2">巨杉文化</router-link></li>
+              <li><router-link to="/news/1">巨杉资讯</router-link></li>
+              <li><router-link to="/news/2">巨杉文化</router-link></li>
             </ul>
           </li>
-          <li><router-link to="/product">产品服务</router-link></li>
-          <li>
-            <router-link to="/server">客户服务</router-link>
+          <li :class="{active: (active == 'Product')}"><router-link to="/product/1">产品服务</router-link></li>
+          <li :class="{active: (active == 'Personal')}">
+            <router-link to="/personal">客户服务</router-link>
             <ul>
-              <li><router-link to="/personal ">个人中心</router-link></li>
-              <li><router-link to="/myProduct">我的产品</router-link></li>
+              <li><router-link to="/personal">个人中心</router-link></li>
+              <li><router-link to="/myProduct/1">我的产品</router-link></li>
               <li><router-link to="/feedback">投诉反馈</router-link></li>
             </ul>
           </li>
-          <li><router-link to="/content">联系我们</router-link></li>
+          <li :class="{active: (active == 'Contact')}"><router-link to="/contact">联系我们</router-link></li>
         </ul>
       </div>
     </div>

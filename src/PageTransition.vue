@@ -15,6 +15,7 @@
     },
     beforeRouteUpdate (to, from, next) {
       let isBack = this.$router.isBack
+      $('body,html').animate({scrollTop: 0}, 500)
       if (isBack) {
         this.transitionName = 'slide-right'
       } else {

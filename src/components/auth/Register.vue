@@ -91,7 +91,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label"><span class="required">*</span> 手机</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control">
+              <input type="text" class="form-control" v-model="tel">
             </div>
           </div>
           <div class="form-group">
@@ -129,7 +129,7 @@
           <div class="form-group" v-if="regType == 1">
             <label class="col-sm-3 control-label">生日</label>
             <div class="col-sm-5">
-              <div class="input-group"  @click="openByDrop($event)">
+              <div class="input-group" @click="openByDrop($event)">
                 <input type="text" class="form-control" v-model="birthday.value">
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
@@ -175,6 +175,15 @@
             </div>
           </div>
           <div class="form-group">
+            <label class="col-sm-3 control-label"><span class="required">*</span> 短信验证码</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-sm-2 pl0">
+              <CodeCount :value="tel" :callBack="getCode"/>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-3 control-label"><span class="required">*</span> 图形验证码</label>
             <div class="col-sm-3">
               <input type="text" class="form-control">
@@ -185,23 +194,15 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label"><span class="required">*</span> 短信验证码</label>
-            <div class="col-sm-3">
-              <input type="text" class="form-control">
-            </div>
-            <div class="col-sm-3 pl0">
-              <CodeCount :callBack="getCode" />
-            </div>
-          </div>
-          <div class="form-group">
             <label class="col-sm-3 control-label"></label>
             <div class="col-sm-9">
               <div class="checkbox">
                 <label>
                   <input type="checkbox"> 本人已阅读并同意签署
                 </label>
-                <router-link to="">《合格投资者承诺书》</router-link>
-                <router-link to="">《风险揭示书》《注册服务协议》</router-link>
+                <a href="" data-toggle="modal" data-target="#ModalBox" @click="setModalBox('合格投资者承诺书', boxInvestors)">《合格投资者承诺书》</a>
+                <a href="" data-toggle="modal" data-target="#ModalBox" @click="setModalBox('风险揭示书', boxRisk)">《风险揭示书》</a>
+                <a href="" data-toggle="modal" data-target="#ModalBox" @click="setModalBox('注册服务协议', boxProtocol)">《注册服务协议》</a>
               </div>
             </div>
           </div>
@@ -214,6 +215,7 @@
       </div>
     </div>
     <MainFooter/>
+    <ModalBox :title="boxTitle" :con="boxCon"/>
   </div>
 </template>
 <script>
@@ -222,9 +224,11 @@
   import MainFooter from '../common/MainFooter'
   import calendar from '../common/calendar/Index'
   import CodeCount from './CodeCount'
-  import { siteConfig } from '../common/base'
+  import {siteConfig, arcAlert, showCalendar} from '../common/base'
+  import ModalBox from '../common/ModalBox'
+  import {Investors, Risk, Protocol} from './Agreement'
   export default {
-    components: {MainHeader, MainFooter, calendar, CodeCount},
+    components: {MainHeader, MainFooter, calendar, CodeCount, ModalBox},
     mounted() {
       VM = this
       siteConfig.setTitle(siteConfig.nav[6])
@@ -232,32 +236,35 @@
     data() {
       return {
         regType: parseInt(this.$route.params.type),
-        birthday:{
-          show:false,
+        birthday: {
+          show: false,
           value: '',
-          select:(val)=>{
-            VM.birthday.show=false
-            VM.birthday.value=val.join("-")
+          select: (val) => {
+            VM.birthday.show = false
+            VM.birthday.value = val.join("-")
           }
-        }
+        },
+        tel: '',
+        boxTitle: '合格投资者承诺书',
+        boxCon: Investors,
+        boxInvestors: Investors,
+        boxRisk: Risk,
+        boxProtocol: Protocol
       }
     },
     methods: {
       setTab(Val){//选项卡事件
-          VM.regType = Val
+        VM.regType = Val
       },
       getCode() {
-          alert('验证码已发送！')
+        arcAlert('验证码已发送！')
       },
       openByDrop(e){
-        VM.birthday.show=true
-        e.stopPropagation()
-        window.setTimeout(()=>{
-          document.addEventListener("click",(e)=>{
-            this.birthday.show=false;
-            document.removeEventListener("click",()=>{},false);
-          },false);
-        },1000)
+        showCalendar(e, (value) => VM.birthday.show = value)
+      },
+      setModalBox(Title, Con) {
+        VM.boxTitle = Title
+        VM.boxCon = Con
       }
     }
   }
